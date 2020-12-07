@@ -32,6 +32,11 @@ class Produto:
 
 
 def cria_produto():
+    """
+    Função Cria Produto
+    Solicita dados do produto, a classe Produto com os dados
+    :return: objeto prod
+    """
     nome = input("Informe o nome do produto: ")
     categoria = input("Informe a categoria do produto: ")
     descricao = input("Informe a descrição do produto: ")
@@ -41,6 +46,11 @@ def cria_produto():
 
 
 def maior_indice(lista_de_produtos_index):
+    """
+    Busca por maior indice na lista para que cada produto tenha um id unico
+    :param lista_de_produtos_index: lista de produtos existentes
+    return: var_aux que é o maior indice unico da lista
+    """
     var_aux = 1
     for i in range(len(lista_de_produtos_index)):
         if lista_de_produtos_index[i][0] >= var_aux:
@@ -49,6 +59,12 @@ def maior_indice(lista_de_produtos_index):
 
 
 def salva_produto(Produto, lista_de_produtos):
+    """
+    Recebe o objeto produto e a lista com os produtos
+    :param Produto: objeto produto
+    :param lista_de_produtos: lista com produtos salvos
+    :return: lista_de_produtos que é a lista atualizada
+    """
     p = Produto
     lista_aux = [maior_indice(lista_de_produtos)]
     desc_produto = {
@@ -61,12 +77,22 @@ def salva_produto(Produto, lista_de_produtos):
 
 
 def listando_produtos(lista_de_produtos):
+    """
+    Ordena e imprime lista de produtos.
+    :param lista_de_produtos
+    """
     lista_ordenada = sorted(lista_de_produtos)
     for produto in lista_ordenada:
         print(produto)
 
 
 def remove_produto(indice, lista):
+    """
+    Exclui o produto com id informado pelo usuário
+    :param indice: inteiro informado pelo usuário
+    :param lista: lista com produtos cadastrados
+    :return: lista atualizada
+    """
     for i in range(len(lista)):
         if lista[i][0] == indice:
             lista.pop(i)
@@ -75,6 +101,12 @@ def remove_produto(indice, lista):
 
 
 def atualiza_produto(indice, lista):
+    """
+    Atualiza o produto com id informado pelo usuário
+    :param indice: inteiro informado pelo usuário
+    :param lista: lista com produtos cadastrados
+    :return: lista atualizada
+    """
     remove_produto(indice, lista)
     produto_atualizado = cria_produto()
     desc_produto = {
