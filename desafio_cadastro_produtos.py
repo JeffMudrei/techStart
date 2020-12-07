@@ -72,9 +72,9 @@ def salva_produto(Produto, lista_de_produtos):
     p = Produto
     lista_aux = [maior_indice(lista_de_produtos)]
     desc_produto = {
-        'Nome': p.get_nome(),
-        'Categoria': p.get_categoria(),
-        'Descrição': p.get_descricao(),
+        'Nome': p.get_nome().capitalize(),
+        'Categoria': p.get_categoria().capitalize(),
+        'Descrição': p.get_descricao().capitalize(),
         'Preço': p.get_preco()}
     lista_aux.append(desc_produto)
     return lista_de_produtos.append(lista_aux)
