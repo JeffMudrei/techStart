@@ -39,7 +39,12 @@ def cria_produto():
     nome = input("Informe o nome do produto: ")
     categoria = input("Informe a categoria do produto: ")
     descricao = input("Informe a descrição do produto: ")
-    preco = float(input("Informe o preco do produto: "))
+    while True:
+        try:
+            preco = float(input("Informe o preco do produto: "))
+            break
+        except ValueError:
+            print("O preço deve ser um numero decimal usando ponto como separador,\ninforme novamente... ")
     prod = Produto(nome, categoria, descricao, preco)
     return prod
 
