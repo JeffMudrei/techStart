@@ -33,7 +33,6 @@ class Produto:
 
 def cria_produto():
     """
-    Função Cria Produto
     Solicita dados do produto, a classe Produto com os dados
     :return: objeto prod
     """
