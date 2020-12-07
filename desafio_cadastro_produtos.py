@@ -81,8 +81,12 @@ def listando_produtos(lista_de_produtos):
     :param lista_de_produtos
     """
     lista_ordenada = sorted(lista_de_produtos)
-    for produto in lista_ordenada:
-        print(produto)
+    for produto in range(len(lista_ordenada)):
+        id = lista_ordenada[produto][0]
+        produto = lista_ordenada[produto][1]
+        print(f"id: {id}\nNome: {produto['Nome']}\nCategoria: {produto['Categoria']}\nDescrição: {produto['Descrição']}"
+              f"\nPreço: {produto['Preço']}")
+        print('-----------------------------')
 
 
 def remove_produto(indice, lista):
