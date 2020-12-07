@@ -123,7 +123,13 @@ def atualiza_produto(indice, lista):
 
 
 def menu_inicial():
-    print("""
+    """
+    Fica em loop até que uma opção válida seja escolhida
+    :return:opção escolhida
+    """
+    while True:
+        try:
+            print("""
             +-----------------------------------+
             |	olist - Cadastro de produtos	|
             +-----------------------------------+						
@@ -133,8 +139,16 @@ def menu_inicial():
             |	4 - Excluir produtos			|
             |	5 - Encerrar					|
             +-----------------------------------+""")
-    opcao = int(input("             >>> "))
+            opcao = int(input("             >>> "))
+            if opcao not in(1, 2, 3, 4, 5):
+                print("Opção inexistente, escolha entre 1 e 5...")
+                pass
+            else:
+                break
+        except ValueError:
+            print("Ooops! Valor inválido! Digite novamente um número entre 1 e 5...")
     return opcao
+
 
 
 def controle():
