@@ -89,21 +89,19 @@ def cria_categoria(lista) -> Categoria:
     Solicita nome e id de categoria, valida como categoria ou subcategoria
     :return: objeto categoria.
     """
-    global id_categoria
-    nome = input("Informe o nome: ")
-    if verifica_categoria_existente(nome, lista):
-        while True:
-            try:
-                id_categoria = int(input("[1] - Categoria\n[2] - Subcategoria \n>>> "))
-                if id_categoria == 1 or id_categoria == 2:
-                    break
-            except ValueError:
-                print("O id deve ser um número inteiro válido")
+    print("Categorias já cadastradas: ")
+    imprime_categoria(0, lista)
+    while True:
+        nome = input("Informe o nome da categoria:").capitalize()
+        try:
+            id_cat = int(input("[1] - Categoria\n[2] - Subcategoria \n>>> "))
+            if id_cat == 1 or id_cat == 2:
+                print('Cadastrando...')
+                break
+        except ValueError:
+            print("Informe um valor válido")
 
-    else:
-        print("Nome ja cadastrado")
-        imprime_categoria(0, lista)
-    c = Categoria(nome, id_categoria)
+    c = Categoria(nome, id_cat)
     return c
 
 
@@ -132,7 +130,7 @@ def exclui_categoria():
     pass
 
 
-def imprime_categoria(opcao=None, lista_categorias=None):
+def imprime_categoria(opcao, lista_categorias):
     lista_ordenada = sorted(lista_categorias)
     if opcao == 1:
         for i in range(len(lista_ordenada)):
@@ -359,9 +357,10 @@ def controle():
             op = menu_inicial()
         elif op == 6:
             salva_categoria(cria_categoria(categorias), categorias)
+            op == menu_inicial()
     print("Até logo!")
 
 
-categorias = []
+categorias = [[1, 'Eletronicos'], [1, 'Moveis']]
 lista_de_produtos = []
 controle()
