@@ -1,10 +1,67 @@
-class Produto:
+# todo  ser possivel cadastrar categorias.
+# todo _ os produtos cadastrados devem pertencer a uma ou mais categorias.
+# todo _ deve ser permitido cadastro de subcategorias.
 
-    def __init__(self, nome, categoria, descricao, preco):
+class Categoria:
+    def __init__(self, nome, id_categoria):
+        self.__nome: str = nome
+        self.__id_categoria: int = id_categoria
+
+    def set_nome_categoria(self, nome) -> None:
         self.__nome = nome
-        self.__categoria = categoria
-        self.__descricao = descricao
-        self.__preco = preco
+
+    def set_id_categoria(self, id_categoria) -> None:
+        self.__id_categoria = id_categoria
+
+    def get_id_categoria(self) -> int:
+        return self.__id_categoria
+
+    def get_nome_categoria(self) -> str:
+        return self.__nome
+
+
+class Produto:
+    # todo extender categoria, criar subcategoria
+    def __init__(self, nome, categoria, subcategoria, descricao, preco, peso, largura, altura, profundidade):
+        self.__nome: str = nome
+        self.__categoria: str = categoria
+        self.__subcategoria: str = subcategoria
+        self.__descricao: str = descricao
+        self.__preco: float = preco
+        self.__peso: float = peso
+        self.__altura: float = altura
+        self.__largura: float = largura
+        self.__profundidade: float = profundidade
+
+    def set_largura(self, largura) -> None:
+        self.__largura = largura
+
+    def get_largura(self) -> float:
+        return self.__largura
+
+    def set_profundidade(self, profundidade) -> None:
+        self.__profundidade = profundidade
+
+    def get_profundidade(self) -> float:
+        return self.__profundidade
+
+    def set_altura(self, altura) -> None:
+        self.__altura = altura
+
+    def get_altura(self) -> float:
+        return self.__altura
+
+    def set_subcategoria(self, subcategoria) -> None:
+        self.__subcategoria = subcategoria
+
+    def get_subcategoria(self) -> str:
+        return self.__subcategoria
+
+    def set_peso(self, peso) -> None:
+        self.__peso = peso
+
+    def get_peso(self) -> float:
+        return self.__peso
 
     def set_nome(self, nome) -> None:
         self.__nome = nome
@@ -27,9 +84,35 @@ class Produto:
     def get_categoria(self) -> str:
         return self.__categoria
 
-    def get_preco(self) -> str:
+    def get_preco(self) -> float:
         return self.__preco
 
+
+def cria_categoria():
+    """
+    Solicita nome e id de categoria, valida como categoria ou subcategoria
+    :return: objeto categoria.
+    """
+    # todo
+    pass
+
+
+def salva_categoria():
+    # todo
+    pass
+
+
+def inclui_categoria():
+    # todo
+    pass
+
+def imprime_categoria():
+    #todo
+    pass
+
+def imprime_subcategoria():
+    #todo
+    pass
 
 def cria_produto():
     """
@@ -38,14 +121,52 @@ def cria_produto():
     """
     nome = input("Informe o nome do produto: ")
     categoria = input("Informe a categoria do produto: ")
-    descricao = input("Informe a descrição do produto: ")
+    subcategoria = input("Informe subcategoria, se existir: ")
     while True:
         try:
-            preco = float(input("Informe o preco do produto: "))
-            break
+            descricao = input("Informe a descrição do produto com pelo menos 20 caracteres: ")
+            if len(descricao) >= 20:
+                break
+        except:
+            #todo não está apresentando mensagem caso não tenha numero suficientes de caracteres
+            print("Informe uma descrição válida com pelo menos 20 caracteres")
+    while True:
+        try:
+            preco = float(input("Informe o preco válido do produto: "))
+            if preco > 0:
+                break
         except ValueError:
             print("O preço deve ser um numero decimal usando ponto como separador,\ninforme novamente... ")
-    prod = Produto(nome, categoria, descricao, preco)
+    while True:
+        try:
+            peso = float(input("Informe o peso válido do produto em kg: "))
+            if peso > 0:
+                break
+        except ValueError:
+            print("Informe um valor valido para o peso\ninforme novamente... ")
+    while True:
+        try:
+            largura = float(input("Informe a largura do produto em cm: "))
+            if largura > 0:
+                break
+        except ValueError:
+            print("Informe um valor valido para a largura\ninforme novamente... ")
+    while True:
+        try:
+            altura = float(input("Informe a altura do produto em cm: "))
+            if altura > 0:
+                break
+        except ValueError:
+            print("Informe um valor valido para a altura\ninforme novamente... ")
+    while True:
+        try:
+            profundidade = float(input("Informe a profundidade do produto em cm: "))
+            if profundidade > 0:
+                break
+        except ValueError:
+            print("Informe um valor valido para a profundidade\ninforme novamente... ")
+
+    prod = Produto(nome, categoria, subcategoria, descricao, preco, peso, largura, altura, profundidade)
     return prod
 
 
@@ -74,12 +195,20 @@ def salva_produto(Produto, lista_de_produtos):
     desc_produto = {
         'Nome': p.get_nome().capitalize(),
         'Categoria': p.get_categoria().capitalize(),
+        'Subcategoria': p.get_subcategoria().capitalize(),
         'Descrição': p.get_descricao().capitalize(),
-        'Preço': p.get_preco()}
+        'Preço': p.get_preco(),
+        'Peso': p.get_peso(),
+        'Largura': p.get_largura(),
+        'Altura': p.get_altura(),
+        'Profundidade': p.get_profundidade()
+
+        }
+
     lista_aux.append(desc_produto)
     return lista_de_produtos.append(lista_aux)
 
-
+#todo calcular volume?
 def listando_produtos(lista_de_produtos):
     """
     Ordena e imprime lista de produtos.
@@ -89,8 +218,12 @@ def listando_produtos(lista_de_produtos):
     for produto in range(len(lista_ordenada)):
         id = lista_ordenada[produto][0]
         produto = lista_ordenada[produto][1]
-        print(f"id: {id}\nNome: {produto['Nome']}\nCategoria: {produto['Categoria']}\nDescrição: {produto['Descrição']}"
-              f"\nPreço: {produto['Preço']}")
+        print(f"id: {id}\nNome: {produto['Nome']}\nCategoria: {produto['Categoria']}"
+              f"\nSubcategoria: {produto['Subcategoria']}"
+              f"\nDescrição: {produto['Descrição']}"
+              f"\nPreço: {produto['Preço']}"
+              f"\nPeso:{produto['Peso']}kg"
+              f"\nDimensões: {produto['Largura']}cm x {produto['Altura']}cm x {produto['Profundidade']}cm ")
         print('-----------------------------')
 
 
@@ -116,12 +249,18 @@ def atualiza_produto(indice, lista):
     :return: lista atualizada
     """
     remove_produto(indice, lista)
-    produto_atualizado = cria_produto()
+    p = cria_produto()
     desc_produto = {
-        'Nome': produto_atualizado.get_nome(),
-        'Categoria': produto_atualizado.get_categoria(),
-        'Descrição': produto_atualizado.get_descricao(),
-        'Preço': produto_atualizado.get_preco()
+        'Nome': p.get_nome().capitalize(),
+        'Categoria': p.get_categoria().capitalize(),
+        'Subcategoria': p.get_subcategoria().capitalize(),
+        'Descrição': p.get_descricao().capitalize(),
+        'Preço': p.get_preco(),
+        'Peso': p.get_peso(),
+        'Largura': p.get_largura(),
+        'Altura': p.get_altura(),
+        'Profundidade': p.get_profundidade()
+
     }
     lista_aux = [indice, desc_produto]
     return lista.append(lista_aux)
@@ -145,7 +284,7 @@ def menu_inicial():
             |	5 - Encerrar					|
             +-----------------------------------+""")
             opcao = int(input("             >>> "))
-            if opcao not in(1, 2, 3, 4, 5):
+            if opcao not in (1, 2, 3, 4, 5):
                 print("Opção inexistente, escolha entre 1 e 5...")
                 pass
             else:
@@ -153,7 +292,6 @@ def menu_inicial():
         except ValueError:
             print("Ooops! Valor inválido! Digite novamente um número entre 1 e 5...")
     return opcao
-
 
 
 def controle():
