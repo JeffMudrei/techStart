@@ -129,9 +129,11 @@ def atualiza_categoria():
     # todo
     pass
 
+
 def exclui_categoria():
     # todo
     pass
+
 
 def imprime_categoria(opcao=None, lista_categorias=None):
     lista_ordenada = sorted(lista_categorias)
@@ -148,22 +150,27 @@ def imprime_categoria(opcao=None, lista_categorias=None):
             print(f'id: {lista_ordenada[i][0]} - Nome {lista_ordenada[i][1]}')
 
 
-def cria_produto() -> Produto:
+def cria_produto(lista_categorias) -> Produto:
     """
     Solicita dados do produto, a classe Produto com os dados
     :return: objeto prod
     """
     nome = input("Informe o nome do produto: ")
-    categoria = input("Informe a categoria do produto: ")
-    subcategoria = input("Informe subcategoria, se existir: ")
+    print("Categorias cadastradas:")
+    imprime_categoria(1, lista_categorias)
     while True:
-        try:
-            descricao = input("Informe a descrição do produto com pelo menos 20 caracteres: ")
-            if len(descricao) >= 20:
-                break
-        except:
-            # todo não está apresentando mensagem caso não tenha numero suficientes de caracteres
-            print("Informe uma descrição válida com pelo menos 20 caracteres")
+        categoria = input("Informe uma categoria existente:")
+        if verifica_categoria_existente(categoria, lista_categorias):
+            break
+    imprime_categoria(2, lista_categorias)
+    while True:
+        subcategoria = input("Informe uma subcategoria existente:")
+        if verifica_categoria_existente(subcategoria, lista_categorias):
+            break
+    while True:
+        descricao = input("Informe a descrição do produto com pelo menos 20 caracteres: ")
+        if len(descricao) >= 20:
+            break
     while True:
         try:
             preco = float(input("Informe o preco válido do produto: "))
@@ -316,22 +323,24 @@ def menu_inicial():
             |	2 - Listar produtos				|
             |	3 - Atualizar produtos			|
             |	4 - Excluir produtos			|
-            |	5 - Encerrar					|
+            |   5 - Listar categorias           |
+            |   6 - Cadastrar categorias        |
+            |	7 - Encerrar					|
             +-----------------------------------+""")
             opcao = int(input("             >>> "))
-            if opcao not in (1, 2, 3, 4, 5):
-                print("Opção inexistente, escolha entre 1 e 5...")
+            if opcao not in (1, 2, 3, 4, 5, 6, 7):
+                print("Opção inexistente, escolha entre 1 e 7...")
                 pass
             else:
                 break
         except ValueError:
-            print("Ooops! Valor inválido! Digite novamente um número entre 1 e 5...")
+            print("Ooops! Valor inválido! Digite novamente um número entre 1 e 7...")
     return opcao
 
 
 def controle():
     op = menu_inicial()
-    while op != 5:
+    while op != 7:
         if op == 1:
             salva_produto(cria_produto(), lista_de_produtos)
             op = menu_inicial()
@@ -348,6 +357,11 @@ def controle():
             indice = int(input("Informe o id do produto: "))
             remove_produto(indice, lista_de_produtos)
             op = menu_inicial()
+        elif op == 5:
+            imprime_categoria(0, categorias)
+            op = menu_inicial()
+        elif op == 6:
+            salva_categoria(cria_categoria(categorias), categorias)
     print("Até logo!")
 
 
