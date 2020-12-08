@@ -1,7 +1,3 @@
-# todo  ser possivel cadastrar categorias.
-# todo _ os produtos cadastrados devem pertencer a uma ou mais categorias.
-# todo _ deve ser permitido cadastro de subcategorias.
-
 class Categoria:
     def __init__(self, nome, id_categoria):
         self.__nome: str = nome
@@ -93,7 +89,7 @@ def cria_categoria(lista) -> Categoria:
     Solicita nome e id de categoria, valida como categoria ou subcategoria
     :return: objeto categoria.
     """
-    global c
+    global id_categoria
     nome = input("Informe o nome: ")
     if verifica_categoria_existente(nome, lista):
         while True:
@@ -103,10 +99,11 @@ def cria_categoria(lista) -> Categoria:
                     break
             except ValueError:
                 print("O id deve ser um número inteiro válido")
-        c = Categoria(nome, id_categoria)
+
     else:
         print("Nome ja cadastrado")
         imprime_categoria(0, lista)
+    c = Categoria(nome, id_categoria)
     return c
 
 
@@ -342,7 +339,7 @@ def controle():
     op = menu_inicial()
     while op != 7:
         if op == 1:
-            salva_produto(cria_produto(), lista_de_produtos)
+            salva_produto(cria_produto(categorias), lista_de_produtos)
             op = menu_inicial()
         elif op == 2:
             listando_produtos(lista_de_produtos)
