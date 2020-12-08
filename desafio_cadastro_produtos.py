@@ -17,7 +17,6 @@ class Categoria:
 
 
 class Produto:
-    # todo extender categoria, criar subcategoria
     def __init__(self, nome, categoria, subcategoria, descricao, preco, peso, largura, altura, profundidade):
         self.__nome: str = nome
         self.__categoria: str = categoria
@@ -357,7 +356,7 @@ def controle():
             op = menu_inicial()
         elif op == 6:
             salva_categoria(cria_categoria(categorias), categorias)
-            op == menu_inicial()
+            op = menu_inicial()
     print("Até logo!")
 
 
