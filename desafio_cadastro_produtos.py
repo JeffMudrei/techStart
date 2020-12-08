@@ -88,33 +88,67 @@ class Produto:
         return self.__preco
 
 
-def cria_categoria():
+def cria_categoria(lista) -> Categoria:
     """
     Solicita nome e id de categoria, valida como categoria ou subcategoria
     :return: objeto categoria.
     """
+    global c
+    nome = input("Informe o nome: ")
+    if verifica_categoria_existente(nome, lista):
+        while True:
+            try:
+                id_categoria = int(input("[1] - Categoria\n[2] - Subcategoria \n>>> "))
+                if id_categoria == 1 or id_categoria == 2:
+                    break
+            except ValueError:
+                print("O id deve ser um número inteiro válido")
+        c = Categoria(nome, id_categoria)
+    else:
+        print("Nome ja cadastrado")
+        imprime_categoria(0, lista)
+    return c
+
+
+def salva_categoria(Categoria, lista_categorias):
+    c = Categoria
+    nome = c.get_nome_categoria().capitalize()
+    id = c.get_id_categoria()
+    return lista_categorias.append([id, nome])
+
+
+def verifica_categoria_existente(nome, lista_categorias) -> bool:
+    for i in range(len(lista_categorias)):
+        if lista_categorias[i][1] == nome:
+            return False
+        else:
+            return True
+
+
+def atualiza_categoria():
     # todo
     pass
 
-
-def salva_categoria():
+def exclui_categoria():
     # todo
     pass
 
+def imprime_categoria(opcao=None, lista_categorias=None):
+    lista_ordenada = sorted(lista_categorias)
+    if opcao == 1:
+        for i in range(len(lista_ordenada)):
+            if lista_ordenada[i][0] == 1:
+                print(f'id: {lista_ordenada[i][0]} - Nome {lista_ordenada[i][1]}')
+    elif opcao == 2:
+        for i in range(len(lista_ordenada)):
+            if lista_ordenada[i][0] == 2:
+                print(f'id: {lista_ordenada[i][0]} - Nome {lista_ordenada[i][1]}')
+    else:
+        for i in range(len(lista_ordenada)):
+            print(f'id: {lista_ordenada[i][0]} - Nome {lista_ordenada[i][1]}')
 
-def inclui_categoria():
-    # todo
-    pass
 
-def imprime_categoria():
-    #todo
-    pass
-
-def imprime_subcategoria():
-    #todo
-    pass
-
-def cria_produto():
+def cria_produto() -> Produto:
     """
     Solicita dados do produto, a classe Produto com os dados
     :return: objeto prod
@@ -128,7 +162,7 @@ def cria_produto():
             if len(descricao) >= 20:
                 break
         except:
-            #todo não está apresentando mensagem caso não tenha numero suficientes de caracteres
+            # todo não está apresentando mensagem caso não tenha numero suficientes de caracteres
             print("Informe uma descrição válida com pelo menos 20 caracteres")
     while True:
         try:
@@ -170,7 +204,7 @@ def cria_produto():
     return prod
 
 
-def maior_indice(lista_de_produtos_index):
+def maior_indice(lista_de_produtos_index) -> int:
     """
     Busca por maior indice na lista para que cada produto tenha um id unico
     :param lista_de_produtos_index: lista de produtos existentes
@@ -203,12 +237,13 @@ def salva_produto(Produto, lista_de_produtos):
         'Altura': p.get_altura(),
         'Profundidade': p.get_profundidade()
 
-        }
+    }
 
     lista_aux.append(desc_produto)
     return lista_de_produtos.append(lista_aux)
 
-#todo calcular volume?
+
+# todo calcular volume?
 def listando_produtos(lista_de_produtos):
     """
     Ordena e imprime lista de produtos.
@@ -316,5 +351,6 @@ def controle():
     print("Até logo!")
 
 
+categorias = []
 lista_de_produtos = []
 controle()
